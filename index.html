@@ -30,15 +30,17 @@
 button.addEventListener('click', function() {
 	alert('=========')
 	try{
-		navigator.bluetooth.requestDevice({
+		alert('1')
+		var ble = navigator.bluetooth.requestDevice({
 			filters: [{
 				services: []
 			}]
-		}).then(device => {
-			alert('device down')
+		})
+		alert('2')
+		ble.then(device => {
 			debug.innerHTML('Got device:'+ device.name);
 			debug.innerHTML('id:'+ device.id);
-			alert()
+			alert('3')
 		});
 		
 	}catch(e){
