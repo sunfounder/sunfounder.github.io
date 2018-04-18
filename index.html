@@ -19,7 +19,7 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it 19!</button>
+		<button id="the-button">Try it 20!</button>
 		<span id='debug'>
 		</span>
 	</body>
@@ -34,10 +34,10 @@
 		try {
 			console.log('1')
 			navigator.bluetooth.requestDevice({
-					filters: [{
-						service: ['www.jnhuamao.cn']
-					}]
-// 					acceptAllDevices: true
+//					filters: [{
+//						service: ['www.jnhuamao.cn']
+//					}]
+					acceptAllDevices: true
 				})
 				.then(function() {
 					console.log('then')
@@ -49,13 +49,13 @@
 					return device.gatt.connect()
 					//			console.log(device.gatt.connect())
 				})
-				.then(server => server.getPrimaryService('www.jnhuamao.cn'))
-				.then(service => {
-// 					sunFounder = service,
-// 					return Promise.all({
-// 						service.getCharacteristic()
-// 					})
-				});
+//				.then(server => server.getPrimaryService('www.jnhuamao.cn'))
+//				.then(service => {
+////					sunFounder = service;
+//					return Promise.all({
+//						service.getCharacteristic()
+//					})
+//				});
 
 		} catch(e) {
 			console.log(false)
