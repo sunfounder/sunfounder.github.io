@@ -18,7 +18,7 @@
 		}
 	</style>
 	<body>
-		<button id="the-button">Try it 13!</button>
+		<button id="the-button">Try it 14!</button>
 		<span id='debug'>
 		</span>
 	</body>
@@ -42,7 +42,7 @@ button.addEventListener('click', function() {
 //			debug.innerHTML('id:'+ device.id);
 //			console.log('3')
 			return	device.gatt.connect()
-//			console.log(device.gatt.connect())
+			alert(device.gatt.connect())
 		});
 		
 	}catch(e){
