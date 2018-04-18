@@ -35,8 +35,9 @@ button.addEventListener('click', function() {
 			filters: [{
 				services: []
 			}]
+			alert('2')
 		})
-		alert('2')
+		alert('23')
 		ble.then(device => {
 			debug.innerHTML('Got device:'+ device.name);
 			debug.innerHTML('id:'+ device.id);
