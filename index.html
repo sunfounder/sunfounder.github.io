@@ -18,7 +18,6 @@
 		}
 	</style>
 	<body>
-		123
 		<button id="the-button">Try it!</button>
 		<span id='debug'>
 		</span>
@@ -36,6 +35,7 @@ button.addEventListener('click', function() {
 				services: []
 			}]
 		}).then(device => {
+			alert('device down')
 			debug.innerHTML('Got device:'+ device.name);
 			debug.innerHTML('id:'+ device.id);
 			alert()
