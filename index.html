@@ -19,7 +19,7 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it 21!</button>
+		<button id="the-button">Try it 22!</button>
 		<span id='debug'>
 		</span>
 	</body>
@@ -28,6 +28,7 @@
 <script type="text/javascript">
 	const debug = document.querySelector('#the-button');
 	const button = document.querySelector('#the-button');
+	var appdevice ;
 	//	debug.innerHTML(navigator.bluetooth);
 	button.addEventListener('click', function() {
 		console.log('=========')
@@ -39,14 +40,15 @@
 //					}]
 					acceptAllDevices: true
 				})
-// 				.then(function() {
-// 					console.log('then')
-// 				})
+//				.then(function() {
+//					console.log('then')
+//				})
 				.then(device => {
-					console.log('Got device:' + device.name + 'id:' + device.id);
-					//			debug.innerHTML('id:'+ device.id);
-					//			console.log('3')
-					return device.gatt.connect()
+					appdevice = device;
+//					console.log('Got device:' + device.name + 'id:' + device.id);
+//					//			debug.innerHTML('id:'+ device.id);
+//					//			console.log('3')
+//					return device.gatt.connect()
 					//			console.log(device.gatt.connect())
 				})
 //				.then(server => server.getPrimaryService('www.jnhuamao.cn'))
@@ -54,6 +56,7 @@
 ////					sunFounder = service;
 //					return Promise.all({
 //						service.getCharacteristic()
+//						console.log(service.getCharacteristic())
 //					})
 //				});
 
