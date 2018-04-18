@@ -19,7 +19,7 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it 16!</button>
+		<button id="the-button">Try it 17!</button>
 		<span id='debug'>
 		</span>
 	</body>
@@ -51,7 +51,7 @@
 				})
 				.then(server => server.getPrimaryService('www.jnhuamao.cn'))
 				.then(service => {
-					sunFounder = service,
+// 					sunFounder = service,
 					return Promise.all({
 						service.getCharacteristic()
 					})
