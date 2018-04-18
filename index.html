@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+	</head>
+	<style type="text/css">
+		button
+		{
+			width: 100px;
+			height: 50px;
+			line-height: 50px;
+			font-size: 18px;
+			border-radius: 10px;
+			background:none;
+			border: 1px solid gray;
+		}
+	</style>
+	<body>
+		<button id="the-button">Try it!</button>
+		<span id='debug'>
+		</span>
+	</body>
+</html>
+<script type="text/javascript">
+	const debug = document.querySelector('#the-button');
+	const button = document.querySelector('#the-button');
+//	debug.innerHTML(navigator.bluetooth);
+button.addEventListener('click', function() {
+	navigator.bluetooth.requestDevice({
+		filters: [{
+			services: []
+		}]
+	}).then(device => {
+		debug.innerHTML('Got device:'+ device.name);
+		debug.innerHTML('id:'+ device.id);
+	});
+});
+</script>
