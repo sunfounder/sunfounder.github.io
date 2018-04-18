@@ -19,7 +19,7 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it 18!</button>
+		<button id="the-button">Try it 19!</button>
 		<span id='debug'>
 		</span>
 	</body>
@@ -36,8 +36,8 @@
 			navigator.bluetooth.requestDevice({
 					filters: [{
 						service: ['www.jnhuamao.cn']
-					}],
-					acceptAllDevices: true
+					}]
+// 					acceptAllDevices: true
 				})
 				.then(function() {
 					console.log('then')
