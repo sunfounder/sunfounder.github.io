@@ -18,7 +18,7 @@
 		}
 	</style>
 	<body>
-		<button id="the-button">Try it 9!</button>
+		<button id="the-button">Try it 10!</button>
 		<span id='debug'>
 		</span>
 	</body>
@@ -38,10 +38,10 @@ button.addEventListener('click', function() {
 		}).then(function(){
 			console.log('then')
 		}).then(device => {
-  		device.addEventListener('gattserverdisconnected', onDisconnected);
+  		device.gatt.connect()
   // Attempts to connect to remote GATT Server.
   			console.log(device.gatt.connect())
-  			return device.gatt.connect();
+  			
 })
 		.then(device => {
 			debug.innerHTML('Got device:'+ device.name);
