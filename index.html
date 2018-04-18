@@ -18,7 +18,7 @@
 		}
 	</style>
 	<body>
-		<button id="the-button">Try it 3!</button>
+		<button id="the-button">Try it 4!</button>
 		<span id='debug'>
 		</span>
 	</body>
@@ -35,7 +35,8 @@ button.addEventListener('click', function() {
 			filters: [{
 				services: []
 			}]
-			alert('2')
+		}).then(function(){
+			alert('then')
 		})
 		alert('23')
 		ble.then(device => {
