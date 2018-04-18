@@ -28,13 +28,22 @@
 	const button = document.querySelector('#the-button');
 //	debug.innerHTML(navigator.bluetooth);
 button.addEventListener('click', function() {
-	navigator.bluetooth.requestDevice({
-		filters: [{
-			services: []
-		}]
-	}).then(device => {
-		debug.innerHTML('Got device:'+ device.name);
-		debug.innerHTML('id:'+ device.id);
-	});
+	alert('=========')
+	try{
+		navigator.bluetooth.requestDevice({
+			filters: [{
+				services: []
+			}]
+		}).then(device => {
+			debug.innerHTML('Got device:'+ device.name);
+			debug.innerHTML('id:'+ device.id);
+			alert()
+		});
+		
+	}catch(e){
+		alert(false)
+		//TODO handle the exception
+	}
+	
 });
 </script>
