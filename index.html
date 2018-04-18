@@ -18,7 +18,7 @@
 		}
 	</style>
 	<body>
-		<button id="the-button">Try it 7!</button>
+		<button id="the-button">Try it 8!</button>
 		<span id='debug'>
 		</span>
 	</body>
@@ -31,22 +31,27 @@ button.addEventListener('click', function() {
 	alert('=========')
 	try{
 		alert('1')
+		console.log('1')
 		var ble = navigator.bluetooth.requestDevice({
 //			filters: [{
 //			}],
 			acceptAllDevices:true
 		}).then(function(){
 			alert('then')
+			console.log('then')
 		})
 		alert('23')
+		console.log('24')
 		ble.then(device => {
 			debug.innerHTML('Got device:'+ device.name);
 			debug.innerHTML('id:'+ device.id);
 			alert('3')
+			console.log('3')
 		});
 		
 	}catch(e){
 		alert(false)
+		console.log(false)
 		//TODO handle the exception
 	}
 	
