@@ -19,7 +19,7 @@
  </style>
 
  <body>
-  <button id="the-button">Try it 31!</button>
+  <button id="the-button">Try it 32!</button>
  </body>
 
 </html>
@@ -54,7 +54,7 @@
     })
     .then(function(services){
       console.log("=====",services)
-      console.log("services[0]",services[0])
+      console.log("services[0]",services[0].getCharacteristics())
       return services.getCharacteristics(CharactUuid)
     })
     
