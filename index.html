@@ -31,7 +31,10 @@
 	var appdevice;
 	var ServiceUuid = 0xFFE0;
 	var CharactUuid = 0xFFE1;
-	document.addEventListener('error',function(event){
+	window.onerror=function(e){
+		alert('错误'+e)
+	}
+	document.addEventListener('onerror',function(event){
 		alert(event)
 	})
 	button.addEventListener('click', function() {
