@@ -19,106 +19,94 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it 49!</button>
-		<span class="blug">blug49</span>
+		<button id="the-button">Try it 41!</button>
+		<button class="stopNotifications">停止监听</button>
 	</body>
 
 </html>
 <script type="text/javascript">
 	// const debug = document.querySelector('#the-button');
 	var button = document.querySelector('#the-button');
-	var blug=document.querySelector('.blug')
+	var blug = document.querySelector('.blug')
 	var appdevice;
 	var ServiceUuid = 0xFFE0;
 	var CharactUuid = 0xFFE1;
-	window.onerror = function (msg, url, lineNo, columnNo, error) {
-    var string = msg.toLowerCase();
-    var substring = "script error";
-    if (string.indexOf(substring) > -1){
-        alert('Script Error: See Browser Console for Detail');
-    } else {
-        var message = [
-            'Message: ' + msg,
-            'URL: ' + url,
-            'Line: ' + lineNo,
-            'Column: ' + columnNo,
-            'Error object: ' + JSON.stringify(error)
-        ].join(' - ');
 
-        alert(message);
-    }
-
-    return false;
-};
+	function textEncoder(value) {
+		var encoder = new TextEncoder('utf-8');
+		value = encoder.encode(value)
+		return value
+	}
 	button.addEventListener('click', function() {
-		console.log('=========')
-		try {
-			console.log(navigator.bluetooth);
-			navigator.bluetooth.requestDevice({
-					filters: [{
-						services: [ServiceUuid]
-					}],
+	console.log('=========')
+	try {
+	console.log(navigator.bluetooth);
+	navigator.bluetooth.requestDevice({
+			filters: [{
+				services: [ServiceUuid]
+			}],
 
-					// acceptAllDevices: true
-				})
-				.then(function(device) {
+			// acceptAllDevices: true
+		})
+		.then(function(device) {
 
-					appdevice = device;
-					// navigator.bluetooth
-					console.log(appdevice)
+			appdevice = device;
+			// navigator.bluetooth
+			console.log(appdevice)
 
-					console.log("开始连接");
-					alert('开始连接')
-					return appdevice.gatt.connect()
-				})
-				.then(function(server) {
-					alert()
-					try{
-						console.log("连接成功开始扫描服务", server);
-						alert("连接成功开始扫描服务"+server);
-						return server.getPrimaryService(ServiceUuid)
-					}catch(e){
-						alert(e)
-					}	
-					
-				})
-				.then(function(services) {
-					try{
-						console.log("=====", services)
-					//    console.log("services[0]",services[0])
-						return Promise.all([
-						services.getCharacteristics(CharactUuid)
-						.then(function(res) {
-							console.log('Characteristic:', res)
-							alert('Characteristic:'+ res)
-							// var value='Hello,I am Roies!'
-							// var uint8Array=new uint8Array([12])
-							var encoder = new TextEncoder('utf-8');
-							var value = 11
-							value=encoder.encode(value)
-
-							res[0].writeValue(value)
-					
-							// res[0].startNotifications()
-							// .then(function(){
-       //                         res[0].addEventListener('oncharacteristicvaluechanged',function(){
-
-       //                         })
-							// })
-						}).then(function () {
-							console.log('写入成功')
-							alert('写入成功')
-						})
-					])
-					}catch(e){
-						alert(e)		
-					}
-				})
+			console.log("开始连接");
+			alert('开始连接')
+			return appdevice.gatt.connect()
+		})
+		.then(function(server) {
+			try{
+				console.log("连接成功开始扫描服务", server);
+				alert("连接成功开始扫描服务", server);
+				return server.getPrimaryService(ServiceUuid)
+			}catch(e){
+				alert(e)
+			}
+		})
+		.then(function(services) {
+				console.log("=====", services)
+				//    console.log("services[0]",services[0])
+				return Promise.all([
+					services.getCharacteristics(CharactUuid)
+					.then(function(res) {
+						console.log('Characteristic:', res)
+						alert('Characteristic:'+res)
+						res[0].writeValue(textEncoder(11))
+							.then(function() {
+								console.log('写入成功')
+								alert('写入成功')
+							})
+						res[0].startNotifications().then(function() {
+							console.log('开始监听通知')
+							res[0].addEventListener('characteristicvaluechanged', function(success) {
+								console.log('监听到了改变事件'+success+','+success)
+								var arr=[]
+								for(var key in success)
+								{
+									arr.push(success[key])
+								}
+								console.log(arr)
+								res[0].writeValue(textEncoder(22))
+								document.querySelector('.stopNotifications').addEventListener('click',function(){
+									res[0].stopNotifications().then(function(){
+										console.log('停止监听通知按钮已经开启')
+									})
+								})
+							})
+							})
+						
+					})	
+				])
+			})
 
 		} catch(e) {
-			console.log(false)
-			alert(false)
+				console.log(false)
+				alert(false)
 		}
-                                                                               
+
 	});
 </script>
