@@ -1,69 +1,72 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title></title>
-	</head>
-	<style type="text/css">
-		button {
-			width: 100px;
-			height: 50px;
-			line-height: 50px;
-			font-size: 18px;
-			border-radius: 10px;
-			background: none;
-			border: 1px solid gray;
-		}
-	</style>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title></title>
+ </head>
+ <style type="text/css">
+  button {
+   width: 100px;
+   height: 50px;
+   line-height: 50px;
+   font-size: 18px;
+   border-radius: 10px;
+   background: none;
+   border: 1px solid gray;
+  }
+ </style>
 
-	<body>
-		<button id="the-button">Try it 22!</button>
-		<span id='debug'>
-		</span>
-	</body>
+ <body>
+  <button id="the-button">Try it 23!</button>
+  <span id='debug'>
+  </span>
+ </body>
 
 </html>
 <script type="text/javascript">
-	const debug = document.querySelector('#the-button');
-	const button = document.querySelector('#the-button');
-	var appdevice ;
-	//	debug.innerHTML(navigator.bluetooth);
-	button.addEventListener('click', function() {
-		console.log('=========')
-		try {
-			console.log('1')
-			navigator.bluetooth.requestDevice({
-//					filters: [{
-//						service: ['www.jnhuamao.cn']
-//					}]
-					acceptAllDevices: true
-				})
-//				.then(function() {
-//					console.log('then')
-//				})
-				.then(device => {
-					appdevice = device;
-//					console.log('Got device:' + device.name + 'id:' + device.id);
-//					//			debug.innerHTML('id:'+ device.id);
-//					//			console.log('3')
-//					return device.gatt.connect()
-					//			console.log(device.gatt.connect())
-				})
-//				.then(server => server.getPrimaryService('www.jnhuamao.cn'))
-//				.then(service => {
-////					sunFounder = service;
-//					return Promise.all({
-//						service.getCharacteristic()
-//						console.log(service.getCharacteristic())
-//					})
-//				});
+ const debug = document.querySelector('#the-button');
+ const button = document.querySelector('#the-button');
+ var appdevice ;
+// var ServiceUuid='FFE0';
+// var CharactUuid='FFE1';
+ // debug.innerHTML(navigator.bluetooth);
+ button.addEventListener('click', function() {
+  console.log('=========')
+  try {
+   console.log(navigator.bluetooth);
+   navigator.bluetooth.requestDevice({
+      // filters: [{services: [0x0001,0xffe7]}],
+       filters: [{services: ['FEE0']}],
+      
+     // acceptAllDevices: true
+    })
+//    .then(function() {
+//     console.log('then')
+//    })
+    .then(function(device){
+       
+     appdevice = device;
+     // navigator.bluetooth
+     console.log(appdevice)
 
-		} catch(e) {
-			console.log(false)
-			//TODO handle the exception
-		}
+     console.log("开始连接");
+     return appdevice.gatt.connect() 
+    })
+    .then(function(server){
 
-	});
+      console.log("连接成功开始扫描服务");
+      return server.getPrimaryServices()
+    })
+    .then(function(services){
+      console.log("=====",services)
+      return service.getCharacteristic()
+    })
+
+  } catch(e) {
+   console.log(false)
+  }
+
+ });
 </script>
