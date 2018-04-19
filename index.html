@@ -19,7 +19,7 @@
  </style>
 
  <body>
-  <button id="the-button">Try it 32!</button>
+  <button id="the-button">Try it 33!</button>
  </body>
 
 </html>
@@ -54,8 +54,13 @@
     })
     .then(function(services){
       console.log("=====",services)
-      console.log("services[0]",services[0].getCharacteristics())
-      return services.getCharacteristics(CharactUuid)
+//    console.log("services[0]",services[0])
+		return Promise.all([
+			services.getCharacteristics(CharactUuid)
+			.then(function(res){
+				console.log('Characteristic:',res)
+			})
+		])
     })
     
 
