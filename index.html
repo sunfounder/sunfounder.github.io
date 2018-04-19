@@ -19,8 +19,8 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it 44!</button>
-		<span class="blug">blug44</span>
+		<button id="the-button">Try it 45!</button>
+		<span class="blug">blug45</span>
 	</body>
 
 </html>
@@ -53,19 +53,24 @@
 					return appdevice.gatt.connect()
 				})
 				.then(function(server) {
-						
-					console.log("连接成功开始扫描服务", server);
-					alert("连接成功开始扫描服务"+server);
-					return server.getPrimaryService(ServiceUuid)
+					try{
+						console.log("连接成功开始扫描服务", server);
+						alert("连接成功开始扫描服务"+server);
+						return server.getPrimaryService(ServiceUuid)
+					}catch(e){
+						alert(e)
+					}	
+					
 				})
 				.then(function(services) {
-					console.log("=====", services)
+					try{
+						console.log("=====", services)
 					//    console.log("services[0]",services[0])
-					return Promise.all([
+						return Promise.all([
 						services.getCharacteristics(CharactUuid)
 						.then(function(res) {
 							console.log('Characteristic:', res)
-							alert('Characteristic:', res)
+							alert('Characteristic:'+ res)
 							// var value='Hello,I am Roies!'
 							// var uint8Array=new uint8Array([12])
 							var encoder = new TextEncoder('utf-8');
@@ -73,6 +78,10 @@
 							value=encoder.encode(value)
 
 							res[0].writeValue(value)
+					}catch(e){
+						alert(e)		
+					}
+					
 							// res[0].startNotifications()
 							// .then(function(){
        //                         res[0].addEventListener('oncharacteristicvaluechanged',function(){
