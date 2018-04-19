@@ -19,8 +19,8 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it again!</button>
-		<span class="blug">blug</span>
+		<button id="the-button">Try it 43!</button>
+		<span class="blug">blug43</span>
 	</body>
 
 </html>
@@ -56,7 +56,7 @@
 
 					console.log("连接成功开始扫描服务", server);
 					alert("连接成功开始扫描服务", server);
-					return server.getPrimaryService(ServiceUuid)
+					return server.getPrimaryServices(ServiceUuid)
 				})
 				.then(function(services) {
 					console.log("=====", services)
