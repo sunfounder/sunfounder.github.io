@@ -19,7 +19,7 @@
  </style>
 
  <body>
-  <button id="the-button">Try it 25!</button>
+  <button id="the-button">Try it 26!</button>
   <span id='debug'>
   </span>
  </body>
@@ -29,8 +29,8 @@
  const debug = document.querySelector('#the-button');
  const button = document.querySelector('#the-button');
  var appdevice ;
-// var ServiceUuid='FFE0';
-// var CharactUuid='FFE1';
+   var ServiceUuid=0xFFE0;
+   var CharactUuid=0xFFE1;
  // debug.innerHTML(navigator.bluetooth);
  button.addEventListener('click', function() {
   console.log('=========')
@@ -38,7 +38,7 @@
    console.log(navigator.bluetooth);
    navigator.bluetooth.requestDevice({
       // filters: [{services: [0x0001,0xffe7]}],
-       filters: [{services: [0xFFE0]}],
+       filters: [{services: [ServiceUuid]}],
       
      // acceptAllDevices: true
     })
@@ -57,11 +57,11 @@
     .then(function(server){
 
       console.log("连接成功开始扫描服务");
-      return server.getPrimaryServices()
+      return server.getPrimaryServices(ServiceUuid)
     })
     .then(function(services){
       console.log("=====",services)
-      return services.getCharacteristic()
+      return services.getCharacteristic(CharactUuid)
     })
 
   } catch(e) {
