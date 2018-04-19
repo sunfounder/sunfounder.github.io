@@ -19,7 +19,7 @@
  </style>
 
  <body>
-  <button id="the-button">Try it 26!</button>
+  <button id="the-button">Try it 27!</button>
   <span id='debug'>
   </span>
  </body>
@@ -57,7 +57,7 @@
     .then(function(server){
 
       console.log("连接成功开始扫描服务");
-      return server.getPrimaryServices(ServiceUuid)
+      return server.getPrimaryService(ServiceUuid)
     })
     .then(function(services){
       console.log("=====",services)
