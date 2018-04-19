@@ -19,14 +19,15 @@
 	</style>
 
 	<body>
-		<h1>Hello</h1>
-		<button id="the-button">Try it 41!</button>
+		<button id="the-button">Try it again!</button>
+		<span class="blug">blug</span>
 	</body>
 
 </html>
 <script type="text/javascript">
 	// const debug = document.querySelector('#the-button');
-	const button = document.querySelector('#the-button');
+	var button = document.querySelector('#the-button');
+	var blug=document.querySelector('.blug')
 	var appdevice;
 	var ServiceUuid = 0xFFE0;
 	var CharactUuid = 0xFFE1;
@@ -48,11 +49,13 @@
 					console.log(appdevice)
 
 					console.log("开始连接");
+					alert('开始连接')
 					return appdevice.gatt.connect()
 				})
 				.then(function(server) {
 
 					console.log("连接成功开始扫描服务", server);
+					alert("连接成功开始扫描服务", server);
 					return server.getPrimaryService(ServiceUuid)
 				})
 				.then(function(services) {
@@ -62,21 +65,30 @@
 						services.getCharacteristics(CharactUuid)
 						.then(function(res) {
 							console.log('Characteristic:', res)
+							alert('Characteristic:', res)
 							// var value='Hello,I am Roies!'
 							// var uint8Array=new uint8Array([12])
 							var encoder = new TextEncoder('utf-8');
-							var value = 'Hello World !'
+							var value = 11
 							value=encoder.encode(value)
 
 							res[0].writeValue(value)
+							// res[0].startNotifications()
+							// .then(function(){
+       //                         res[0].addEventListener('oncharacteristicvaluechanged',function(){
+
+       //                         })
+							// })
 						}).then(function () {
 							console.log('写入成功')
+							alert('写入成功')
 						})
 					])
 				})
 
 		} catch(e) {
 			console.log(false)
+			alert(false)
 		}
                                                                                
 	});
