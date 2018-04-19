@@ -2,7 +2,6 @@
 <html>
 
 	<head>
-		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
@@ -20,8 +19,7 @@
 	</style>
 
 	<body>
-		44
-		<button id="the-button">Try it 44!</button>
+		<button id="the-button">Try it 50!</button>
 		<button class="stopNotifications">停止监听</button>
 	</body>
 
@@ -40,6 +38,12 @@
 		value = encoder.encode(value)
 		return value
 	}
+	function textDecoder(value) {
+		var dencoder = new TextDecoder('Windows-1251');
+		var dencodeValue=new Uint8Array([value]);
+		value = dencoder.decode(dencodeValue)
+		return value
+	}	
 	button.addEventListener('click', function() {
 	console.log('=========')
 	try {
@@ -86,7 +90,7 @@
 						res[0].startNotifications().then(function() {
 							console.log('开始监听通知')
 							res[0].addEventListener('characteristicvaluechanged', function(success) {
-								console.log('监听到了改变事件'+success+','+success)
+								console.log('监听到了改变事件'+success+', '+'监听内容:'+textDecoder(success))
 								var arr=[]
 								for(var key in success)
 								{
