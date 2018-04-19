@@ -19,7 +19,7 @@
  </style>
 
  <body>
-  <button id="the-button">Try it 28!</button>
+  <button id="the-button">Try it 29!</button>
   <span id='debug'>
   </span>
  </body>
@@ -63,7 +63,10 @@
       console.log("=====",services)
       return services.getCharacteristics(CharactUuid)
     })
-
+    .then(function(characteristic){
+    	console.log('开始读蓝牙',characteristic)
+    	return characteristic.readValue()
+    })
   } catch(e) {
    console.log(false)
   }
