@@ -19,8 +19,8 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it 45!</button>
-		<span class="blug">blug45</span>
+		<button id="the-button">Try it 46!</button>
+		<span class="blug">blug46</span>
 	</body>
 
 </html>
@@ -78,9 +78,6 @@
 							value=encoder.encode(value)
 
 							res[0].writeValue(value)
-					}catch(e){
-						alert(e)		
-					}
 					
 							// res[0].startNotifications()
 							// .then(function(){
@@ -93,6 +90,9 @@
 							alert('写入成功')
 						})
 					])
+					}catch(e){
+						alert(e)		
+					}
 				})
 
 		} catch(e) {
