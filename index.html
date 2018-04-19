@@ -19,8 +19,8 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it 46!</button>
-		<span class="blug">blug46</span>
+		<button id="the-button">Try it 47!</button>
+		<span class="blug">blug47</span>
 	</body>
 
 </html>
@@ -31,6 +31,9 @@
 	var appdevice;
 	var ServiceUuid = 0xFFE0;
 	var CharactUuid = 0xFFE1;
+	document.addEventListener('error',function(event){
+		alert(event)
+	})
 	button.addEventListener('click', function() {
 		console.log('=========')
 		try {
@@ -53,6 +56,7 @@
 					return appdevice.gatt.connect()
 				})
 				.then(function(server) {
+					alert()
 					try{
 						console.log("连接成功开始扫描服务", server);
 						alert("连接成功开始扫描服务"+server);
