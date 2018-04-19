@@ -19,8 +19,8 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it 43!</button>
-		<span class="blug">blug43</span>
+		<button id="the-button">Try it 44!</button>
+		<span class="blug">blug44</span>
 	</body>
 
 </html>
@@ -53,10 +53,10 @@
 					return appdevice.gatt.connect()
 				})
 				.then(function(server) {
-
+						
 					console.log("连接成功开始扫描服务", server);
-					alert("连接成功开始扫描服务", server);
-					return server.getPrimaryServices(ServiceUuid)
+					alert("连接成功开始扫描服务"+server);
+					return server.getPrimaryService(ServiceUuid)
 				})
 				.then(function(services) {
 					console.log("=====", services)
