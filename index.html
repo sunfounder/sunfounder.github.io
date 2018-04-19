@@ -19,7 +19,7 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it 36!</button>
+		<button id="the-button">Try it 38!</button>
 	</body>
 
 </html>
@@ -58,23 +58,21 @@
 					console.log("=====", services)
 					//    console.log("services[0]",services[0])
 					return Promise.all([
-						try{
-						    services.getCharacteristics(CharactUuid)
+						services.getCharacteristics(CharactUuid)
 						.then(function(res) {
 							console.log('Characteristic:', res)
-							var value='Hello,I am Roies!'
-							res.writeValue(value)
+							// var value='Hello,I am Roies!'
+							var uint8Array=new Uint8Array([1])
+							res.writeValue(uint8Array)
+						}).then(function () {
+							console.log('读取成功')
 						})
-						}catch(e){
-							console.log('读取异常)
-						}
-						
 					])
 				})
 
 		} catch(e) {
 			console.log(false)
 		}
-
+                                                                               
 	});
 </script>
