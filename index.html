@@ -38,7 +38,7 @@
    console.log(navigator.bluetooth);
    navigator.bluetooth.requestDevice({
       // filters: [{services: [0x0001,0xffe7]}],
-       filters: [{services: ['FEE0']}],
+       filters: [{services: [0xFFE0]}],
       
      // acceptAllDevices: true
     })
