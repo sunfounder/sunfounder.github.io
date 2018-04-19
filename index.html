@@ -19,7 +19,7 @@
 	</style>
 
 	<body>
-		<button id="the-button">Try it 38!</button>
+		<button id="the-button">Try it 40!</button>
 	</body>
 
 </html>
@@ -62,10 +62,14 @@
 						.then(function(res) {
 							console.log('Characteristic:', res)
 							// var value='Hello,I am Roies!'
-							var uint8Array=new Uint8Array([1])
-							res.writeValue(uint8Array)
+							// var uint8Array=new uint8Array([12])
+							var encoder = new TextEncoder('utf-8');
+							var value = 'Hello World！'
+							value=encoder.encode(value)
+
+							res[0].writeValue(value)
 						}).then(function () {
-							console.log('读取成功')
+							console.log('写入成功')
 						})
 					])
 				})
