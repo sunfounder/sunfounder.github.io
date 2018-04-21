@@ -16,24 +16,226 @@
 			background: none;
 			border: 1px solid gray;
 		}
+		
+		.boothConnect,
+		.boothListener {}
+		
+		.dis {
+			display: none;
+		}
 	</style>
 
 	<body>
-		55
-		<button id="the-button">Try it 55!</button>
+		<!-- <div>
+		<button id="the-button">Try it 41!</button>
 		<button class="stopNotifications">停止监听</button>
+		<button class="disconnect">断开蓝牙</button>
+		<button>test</button>
+	</div> -->
+		<div>
+			<div class="connect">
+				<button class="boothConnect">
+				<span class="ConnectBtn">连接蓝牙</span>
+			</button>
+				<button class="boothDisconnect dis">
+				<span class="DisconnectBtn">断开蓝牙</span>
+			</button>
+			</div>
+			<div class="listener">
+				<button class="boothListener">
+				<span class="ListenerBtn">开启监听</span>
+			</button>
+				<button class="boothUnlistener dis">
+				<span class="UnlistenerBtn">断开监听</span>
+			</button>
+			</div>
+			<button class="sendmsg">发送数据</button>
+			<div class="recivemsg">你接收到的数据是：<span></span></div>
+		</div>
 	</body>
 
 </html>
-<script>
-	window.WeinreServerURL = '192.168.0.185:8080';
-</script>	
-<script src="a.js"></script>
 <script type="text/javascript">
-	// const debug = document.querySelector('#the-button');
+	function querySelector(selector) {
+		return document.querySelector(selector)
+	}
+
+	var appdevice;
+	var ServiceUuid = 0xFFE0;
+	var CharactUuid = 0xFFE1;
+	var boothConnect = querySelector('.boothConnect')
+	var boothDisconnect = querySelector('.boothDisconnect')
+	var boothListener = querySelector('.boothListener')
+	var boothUnlistener = querySelector('.boothUnlistener')
+	var connectBtn = querySelector('.ConnectBtn')
+	var listenerBtn = querySelector('.ListenerBtn')
+	var sendmsg = querySelector('.sendmsg')
+	var recivemsg = querySelector('.recivemsg span')
+	var deviceServer = null;
+	// //添加class类名
+	// function addClass(el, className) {
+	// 	if(hasClass(el, className)) {
+	// 		return
+	// 	}
+	// 	var newClass = el.className.split(' ')
+	// 	newClass.push(className)
+	// 	el.className = newClass.join(' ')
+	// }
+	// //判断是否含有某个class类名
+	// function hasClass(el, className) {
+	// 	// \s匹配任何空白字符，包括空格、制表符、换页符等等
+	// 	var reg = new RegExp('(^|\\s)' + className + '(\\s|$)')
+	// 	return reg.test(el.className)
+	// }
+	// //删除某个class类名
+	// function removeClass(el, className) {
+	// 	if(!hasClass(el, className)) {
+	// 		return
+	// 	}
+	// 	var newClass = el.className.split(' ')
+	// 	newClass.forEach(function(val, index, newClass) {
+	// 		if(val === className) {
+	// 			newClass.splice(index, 1);
+	// 		}
+	// 	})
+	// 	el.className = newClass.join(' ')
+	// }
+	// //编码
+	// function textEncoder(value) {
+	// 	var encoder = new TextEncoder('utf-8');
+	// 	value = encoder.encode(value)
+	// 	return value
+	// }
+	// //解码
+	// function textDecoder(value) {
+	// 	var decoder = new TextDecoder('utf-8');
+	// 	value = decoder.decode(value)
+	// 	return value
+	// }
+
+	function service(callback){
+		if (deviceServer != null) {
+			deviceServer.getPrimaryService(ServiceUuid)
+			.then(function(services){
+				console.log("这里获取成功了服务");
+				callback(null,services);
+			})
+		}else {
+			request(function(error,server){
+				if(server != null){
+					deviceServer = server;
+					service(callback);
+				}else{
+					callback(error,null);
+				}
+			})
+		}
+	}
+	//
+	function request(callback) {
+		try {
+			var index = 0
+			console.log(navigator.bluetooth);
+
+			navigator.bluetooth.requestDevice({
+					filters: [{
+						services: [ServiceUuid]
+					}],
+
+					// acceptAllDevices: true
+				})
+				.then(function(device) {
+
+					appdevice = device;
+					// navigator.bluetooth
+					console.log(appdevice)
+					console.log(boothConnect.style.display)
+					if(boothConnect.style.display == 'block') {
+						return appdevice.gatt.connect()
+
+					} else if(boothDisconnect.style.display == 'block') {
+						return appdevice.gatt.disconnect()
+					}
+				}).then(function(server){
+					callback(null,server);
+					// deviceServer  = server;
+					console.log("点击连接的时候 等这里成功了 再进行下一步");
+				});
+		} catch(e) {
+			callback(e,null);
+			// console.log(e)
+		}
+	}
+
+	boothConnect.addEventListener('click', function() {
+		console.log("开始连接");
+		alert('开始连接')
+		request(function(error,server){
+			if (server != null) {
+				deviceServer = server
+							// index++
+		alert('蓝牙已经连接成功了')
 	
+		boothConnect.style.display = 'none'
+		boothDisconnect.style.display = 'block'
+			}else {
+				alert('蓝牙连接失败',error);
+			}
+
+		})
+		
+	})
+	// boothDisconnect.addEventListener('click', function() {
+	// 	request()
+	// 	alert('蓝牙已断开')
+		
+	// 	boothConnect.style.display = 'block'
+	// 	boothDisconnect.style.display = 'none'
+	// })
+
+
+	
+	boothListener.addEventListener('click', function() {
+		service(function(error,services){
+			if (services != null){
+				services[0].startNotifications().then(function() {
+				console.log('监听已开启')
+				
+			}) 
+				boothListener.style.display = 'none'
+				boothUnlistener.style.display = 'block'
+			} else {
+				console.log("出错了,无法开启监听") 
+		
+			}
+		
+	}) 
+
+
+		/*	
+	boothUnlistener.addEventListener('click', function() {
+		serverice()[0].stopNotifications().then(function() {
+				console.log('监听已关闭')
+			}
+	}) 
+	sendmsg.addEventListener('click', function() {
+		serverice()[0].writeValue(textEncoder('1234'))
+			.then(function() {
+				console.log('写入成功')
+				alert('写入成功')
+	})
+	serverice()[0].addEventListener('characteristicvaluechanged', function(success) {
+		var value = success.target.value
+		console.log('接收到了新数据：' + textDecoder(value))
+		recivemsg.innerHTML(textDecoder(value))
+	})
+	*/
+</script>
+<script type="text/javascript">
+	/*
+	// const debug = document.querySelector('#the-button');
 	var button = document.querySelector('#the-button');
-	var blug = document.querySelector('.blug')
+	var disconnect = document.querySelector('.disconnect')
 	var appdevice;
 	var ServiceUuid = 0xFFE0;
 	var CharactUuid = 0xFFE1;
@@ -44,81 +246,97 @@
 		return value
 	}
 	function textDecoder(value) {
-		var dencoder = new TextDecoder('Windows-1251');
-		var dencodeValue=new Uint8Array([value]);
-		value = dencoder.decode(dencodeValue)
+		var decoder = new TextDecoder('utf-8');
+		value = decoder.decode(value)
 		return value
-	}	
+	}
+
+
 	button.addEventListener('click', function() {
-	console.log('=========')
-	try {
-	console.log(navigator.bluetooth);
-	navigator.bluetooth.requestDevice({
-			filters: [{
-				services: [ServiceUuid]
-			}],
 
-			// acceptAllDevices: true
+		console.log('=========')
+		try {
+			console.log(navigator.bluetooth);
+			navigator.bluetooth.requestDevice({
+				filters: [{
+					services: [ServiceUuid]
+				}],
+
 		})
-		.then(function(device) {
+			.then(function(device) {
 
-			appdevice = device;
+				appdevice = device;
 			// navigator.bluetooth
 			console.log(appdevice)
-
+		
 			console.log("开始连接");
 			alert('开始连接')
 			return appdevice.gatt.connect()
 		})
-		.then(function(server) {
-			try{
-				console.log("连接成功开始扫描服务", server);
-				alert("连接成功开始扫描服务", server);
-				return server.getPrimaryService(ServiceUuid)
-			}catch(e){
-				alert(e)
-			}
-		})
-		.then(function(services) {
+			.then(function(server) {
+				disconnect.addEventListener('click',function(){
+					appdevice.gatt.disconnect()
+					alert('蓝牙已经断开了')
+				})
+				try{
+					console.log("连接成功开始扫描服务", server);
+					alert("连接成功开始扫描服务", server);
+					return server.getPrimaryService(ServiceUuid)
+				}catch(e){
+					alert(e)
+				}
+			})
+			.then(function(services) {
 				console.log("=====", services)
-				//    console.log("services[0]",services[0])
+				    console.log("services[0]",services[0])
 				return Promise.all([
 					services.getCharacteristics(CharactUuid)
 					.then(function(res) {
 						console.log('Characteristic:', res)
 						alert('Characteristic:'+res)
-						res[0].writeValue(textEncoder(11))
-							.then(function() {
-								console.log('写入成功')
-								alert('写入成功')
-							})
+						res[0].writeValue(textEncoder('1234'))
+						.then(function() {
+							console.log('写入成功')
+							alert('写入成功')
+						})
 						res[0].startNotifications().then(function() {
 							console.log('开始监听通知')
 							res[0].addEventListener('characteristicvaluechanged', function(success) {
-								console.log('监听到了改变事件'+success+', '+'监听内容:'+textDecoder(success))
-								var arr=[]
-								for(var key in success)
-								{
-									arr.push(success[key])
+								var buffer=success.target.value.buffer
+								var successBuffer=Array.from(new Uint8Array(buffer))
+								var value=success.target.value
+								
+								function fromcharCode(code){
+									var deCode=[]
+									for(var key in code)
+									{
+										childSuccess = String.fromCharCode(code[key])
+										console.log(code[key])
+										// console.log(childSuccess)
+										deCode.push(childSuccess)
+									}
+									return deCode.toString().replace(/,/g,'')
 								}
-								console.log(arr)
-								res[0].writeValue(textEncoder(22))
+								console.log('监听到了改变事件'+success+', '+'监听内容:'+fromcharCode(successBuffer)+',textDecoder:'+textDecoder(value))
+								
+								res[0].writeValue(textEncoder('lastTime'))
 								document.querySelector('.stopNotifications').addEventListener('click',function(){
 									res[0].stopNotifications().then(function(){
 										console.log('停止监听通知按钮已经开启')
 									})
 								})
 							})
-							})
+						})
 						
 					})	
-				])
+					])
 			})
 
 		} catch(e) {
-				console.log(false)
-				alert(false)
+			console.log(false)
+			alert(false)
 		}
 
 	});
+	*/
 </script>
