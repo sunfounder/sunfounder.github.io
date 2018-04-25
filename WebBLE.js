@@ -3,15 +3,11 @@ WebBLE = {}
 WebBLE.Device = '';
 WebBLE.Server = '';
 WebBLE.Service=''
-WebBLE.getCharacteristics = '';
+WebBLE.Characteristics = '';
 WebBLE.characteristicValueChanged=''
 WebBLE.ServiceUuid=0xFFE0;
 WebBLE.CharactUuid = 0xFFE1;
-WebBLE.getDevconnect=''
-WebBLE.gatt=''
-WebBLE.getServer=''
-WebBLE.getService=''
-WebBLE.getCharacter=''
+
 
 //编码
 function textEncoder(value) {
