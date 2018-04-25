@@ -5,8 +5,8 @@ WebBLE.Server = '';
 WebBLE.Service=''
 WebBLE.Characteristics = '';
 WebBLE.characteristicValueChanged=''
-WebBLE.ServiceUuid=FFE0;
-WebBLE.CharactUuid =FFE1;
+WebBLE.ServiceUuid=0xFFF0;
+WebBLE.CharactUuid =0xFFE1;
 
 
 //编码
