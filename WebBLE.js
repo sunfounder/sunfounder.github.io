@@ -71,11 +71,11 @@ WebBLE.getService=function(){
 //取蓝牙属性
 WebBLE.getCharacteristics=function(){
 	console.log('getCharacteristics')
-	WebBLE.Service.getCharacteristics(WebBLE.CharactUuid).then(function(characteristics){
-		for(key in characteristics)	{
-			console.log(characteristics)
-		}
-		WebBLE.Characteristics=characteristics[0]
+	WebBLE.Service.getCharacteristic(WebBLE.CharactUuid).then(function(characteristics){
+// 		for(key in characteristics)	{
+// 			console.log(characteristics)
+// 		}
+		WebBLE.Characteristics=characteristics
 		
 		console.log(WebBLE.Characteristics)
 	})
