@@ -1,5 +1,6 @@
 WebBLE = {}
 
+WebBLE.bluetooth = navigator.bluetooth;
 WebBLE.Device = '';
 WebBLE.Server = '';
 WebBLE.Service=''
@@ -28,9 +29,9 @@ function textDecoder(value) {
 //请求搜索蓝牙设备
 WebBLE.request = function(){
 	console.log('request')
-	console.log(navigator.bluetooth);
+	console.log(WebBLE.bluetooth);
 	
-	navigator.bluetooth.requestDevice({
+	WebBLE.bluetooth.requestDevice({
 		filters: [{
 			services: [WebBLE.ServiceUuid]
 		}],
